@@ -60,9 +60,10 @@ async function loadAndStart() {
 
     // ユーザーが指定した開始〜終了で厳密にフィルタリング
     const filteredData = allLoadedData.filter(q => {
-        const targetVal = (rangeType === 'page') ? q.page : q.id;
-        return targetVal >= startVal && targetVal <= endVal;
-    });
+    // parseIntを使うことで "1 (p.238)" という文字列から 先頭の "1" だけを取り出して数値化します
+    const targetVal = (rangeType === 'page') ? parseInt(q.page) : parseInt(q.id);
+    return targetVal >= startVal && targetVal <= endVal;
+});
 
     if (filteredData.length === 0) {
         alert("指定された範囲に問題が見つかりませんでした。\nファイル名やデータ内のpage/id設定を確認してください。");
