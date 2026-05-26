@@ -1,1 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>柔道整復師 過去問演習【一般臨床医学】</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <div id="app-container">
+        
+        <!-- フェーズ1: 設定画面 (Setup Screen) -->
+        <section id="screen-setup">
+            <h1 class="main-title">柔整国試 過去問演習</h1>
+            <p class="sub-title">一般臨床医学</p>
+
+            <div class="setting-card">
+                <div class="setting-item">
+                    <label for="select-round-group">1. 回数グループを選択</label>
+                    <select id="select-round-group">
+                        <option value="group_1_9">第1回 〜 第9回</option>
+                        <option value="group_10_19">第10回 〜 第19回</option>
+                        <option value="group_20_29">第20回 〜 第29回</option>
+                    </select>
+                </div>
+
+                <div class="setting-item">
+                    <label>2. 出題範囲を指定</label>
+                    <div class="range-input-group">
+                        <input type="number" id="input-start" placeholder="開始" min="1">
+                        <span class="range-separator">〜</span>
+                        <input type="number" id="input-end" placeholder="終了" min="1">
+                    </div>
+                    
+                    <div class="range-type-selector">
+                        <label class="radio-label">
+                            <input type="radio" name="range-type" id="range-page" value="page" checked>
+                            <span>ページ数で指定</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="range-type" id="range-id" value="id">
+                            <span>問題番号で指定</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button id="btn-start-quiz" class="primary-btn" onclick="loadAndStart()">演習を開始する</button>
+            </div>
+
+            <!-- 復習セクション -->
+            <div id="review-info">
+                <button id="btn-review" class="review-btn" onclick="startReviewQuiz()">
+                    苦手な問題を復習する (<span id="review-count">0</span>問)
+                </button>
+            </div>
+        </section>
+
+        <!-- フェーズ2: クイズ画面 (Quiz Screen) -->
+        <section id="screen-quiz" class="hidden">
+            <header class="quiz-header">
+                <button id="btn-back-to-setup" class="back-link" onclick="quitQuiz()">◀ 戻る</button>
+                <div id="quiz-progress-text">進捗: 0 / 0</div>
+            </header>
+
+            <div id="question-meta">
+                <span id="display-round-name">第0回</span>
+                <span id="display-page-num">p.0</span>
+            </div>
+
+            <div class="question-box">
+                <div id="display-question-id" class="q-id-badge">第 0 問</div>
+                <p id="display-question-text">問題文がここに表示されます。</p>
+                <div id="display-table-area"></div> <!-- 表表示用 -->
+                <div id="display-image-area"></div> <!-- 図表示用 -->
+            </div>
+
+            <div id="options-list">
+                <!-- JavaScriptで4択ボタンを生成 -->
+            </div>
+
+            <!-- 解答後のフィードバックエリア -->
+            <div id="feedback-area" class="hidden">
+                <div id="result-mark">⭕ 正解！</div>
+                
+                <!-- 解説エリア: ここがスクロールします -->
+                <div id="explanation-container">
+                    <p class="explanation-label">【解説】</p>
+                    <div id="display-explanation-text"></div>
+                </div>
+
+                <button id="btn-next-question" class="next-btn" onclick="nextQuestion()">次の問題へ</button>
+            </div>
+        </section>
+
+        <!-- フェーズ3: 完了画面 (Result Screen) -->
+        <section id="screen-result" class="hidden">
+            <div class="result-card">
+                <h2 class="result-title">演習終了</h2>
+                <div class="score-display">
+                    <span id="final-score">0</span> / <span id="total-questions">0</span>
+                </div>
+                <p id="result-message">お疲れ様でした！</p>
+                <button class="primary-btn" onclick="location.reload()">トップページへ戻る</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
